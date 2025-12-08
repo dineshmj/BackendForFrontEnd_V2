@@ -21,10 +21,7 @@ export class OrdersController {
   async getOrders(@Req() req: Request) {
       const accessToken = (req.session as any)?.AccessToken;
 
-      // const user = req.user as any;
-      // const accessToken = user?.tokens?.accessToken;
-
-      console.log('Accessing getOrders with access token:', accessToken ? accessToken.substring(0, 10) + '...' : 'none');
+      console.log('Accessing getOrders with access token:', accessToken);
 
       if (!accessToken) {
         throw new HttpException(
@@ -34,6 +31,8 @@ export class OrdersController {
       }
 
       const ordersMicroserviceApiUrl = process.env.ORDERS_MICROSERVICE_API_URL;
+      console.log('Orders Microservice API URL:', ordersMicroserviceApiUrl);
+
       const graphQLQuery = {
         query: '{ orderReport { nodes { orderId dateOfOrder totalAmount paymentMethod invoiceNumber numberOfItems dispatchStatus customerName } } }'
       };
