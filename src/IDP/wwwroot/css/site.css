@@ -1,0 +1,24 @@
+.login-page, .logout-page {
+    padding-top: 40px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn {
+    margin-right: 0.5rem;
+}

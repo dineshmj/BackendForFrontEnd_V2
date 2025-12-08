@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  identityserver:
+    build:
+      context: ./src/IdentityServer
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5000
+    networks:
+      - bff-network
+
+  orders-api:
+    build:
+      context: ./src/Microservices/Orders.API
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5001
+    depends_on:
+      - identityserver
+    networks:
+      - bff-network
+
+  products-api:
+    build:
+      context: ./src/Microservices/Products.API
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5002
+    depends_on:
+      - identityserver
+    networks:
+      - bff-network
+
+  payments-api:
+    build:
+      context: ./src/Microservices/Payments.API
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5003
+    depends_on:
+      - identityserver
+    networks:
+      - bff-network
+
+  bff-web:
+    build:
+      context: ./src/BFF.Web
+      dockerfile: Dockerfile
+    ports:
+      - "5005:5005"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5005
+    depends_on:
+      - identityserver
+      - orders-api
+      - products-api
+      - payments-api
+    networks:
+      - bff-network
+
+networks:
+  bff-network:
+    driver: bridge

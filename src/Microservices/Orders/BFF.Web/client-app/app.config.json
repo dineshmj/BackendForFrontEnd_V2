@@ -1,0 +1,7 @@
+{
+  "config": {
+    "pmsLoginUrl": "https://localhost:44367",
+    "ordersBffUrl": "https://localhost:33800",
+    "ordersSpaNextJsPort": 33500
+  }
+}

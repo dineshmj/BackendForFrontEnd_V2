@@ -1,0 +1,16 @@
+meta {
+  name: Get Menu for Roles
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://localhost:44367/api/Menu/Authorized
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

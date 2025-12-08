@@ -1,0 +1,56 @@
+{
+  "name": "Orders Microservice GraphQL API Collection",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "Get Orders as GraphQL Response",
+      "filename": "Get Orders as GraphQL Response.bru",
+      "seq": 1,
+      "settings": {},
+      "tags": [],
+      "examples": [],
+      "request": {
+        "url": "https://localhost:33999/graphql",
+        "method": "POST",
+        "headers": [],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"query\": \"query { orderReport { nodes { orderId dateOfOrder totalAmount paymentMethod invoiceNumber numberOfItems dispatchStatus customerName } } }\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "This request retrieves a list of users from the JSONPlaceholder API.",
+        "auth": {
+          "mode": "bearer",
+          "bearer": {
+            "token": ""
+          }
+        }
+      }
+    }
+  ],
+  "environments": [],
+  "root": {
+    "request": {
+      "auth": {
+        "mode": "none"
+      }
+    }
+  },
+  "brunoConfig": {
+    "version": "1",
+    "name": "Orders Microservice GraphQL API Collection",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}

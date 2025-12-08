@@ -1,0 +1,16 @@
+meta {
+  name: Get Categories
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://localhost:44363/api/categories/get-all
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

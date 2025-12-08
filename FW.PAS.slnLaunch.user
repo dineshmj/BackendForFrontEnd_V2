@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\IDP\\FW.IDP.csproj",
+        "Action": "Start",
+        "DebugTarget": "SelfHost"
+      },
+      {
+        "Path": "src\\Microservices\\Orders\\API\\FW.Microservices.Orders.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      },
+      {
+        "Path": "src\\Microservices\\Products\\API\\FW.Microservices.Products.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      },
+      {
+        "Path": "src\\Microservices\\Products\\BFF.Web\\FW.Microservices.Products.BFFWeb.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      },
+      {
+        "Path": "src\\Shell\\FW.PAS.BFFWeb.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      }
+    ]
+  }
+]

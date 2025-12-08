@@ -1,0 +1,19 @@
+@page
+@model FW.IDP.Pages.Account.LogoutModel
+
+<div class="logout-page">
+    <div class="page-header">
+        <h1>Logout</h1>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>Would you like to logout of Four Walls Inc. IdentityServer?</p>
+
+            <form method="post">
+                <input type="hidden" asp-for="Input.LogoutId" />
+                <button class="btn btn-primary">Yes</button>
+            </form>
+        </div>
+    </div>
+</div>

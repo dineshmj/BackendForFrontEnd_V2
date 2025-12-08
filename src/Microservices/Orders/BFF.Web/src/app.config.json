@@ -1,0 +1,6 @@
+{
+  "config": {
+    "pmsLoginUrl": "https://localhost:44367",
+    "ordersMicroserviceApiUrl": "https://localhost:33999"
+  }
+}
