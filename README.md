@@ -1,9 +1,9 @@
 # BFF Solution with NextJS and ASP.NET Core
 
 ## Prerequisites
-- .NET 8.0 SDK
+- .NET 10.0 SDK
 - Node.js 18+ and npm
-- Visual Studio 2022 or VS Code
+- Visual Studio 2026 or VS Code
 
 ## Quick Start
 
