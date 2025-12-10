@@ -26,7 +26,7 @@ builder.Services
 	.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer (options =>
 	{
-		options.Authority = IDP.Authority;
+		options.Authority = IDP.AUTHORITY;
 		options.Audience = MicroserviceApiResources.ORDERS_API;
 
 		options.TokenValidationParameters = new TokenValidationParameters

@@ -45,9 +45,9 @@ public static class Config
             // Shell BFF Client (BFF using ASP.NET Core 10)
             new()
             {
-                ClientId = PASShellBFF.CLIENT_ID,
-                ClientName = PASShellBFF.CLIENT_NAME,
-                ClientSecrets = { new Secret(PASShellBFF.CLIENT_SECRET.Sha256()) },
+                ClientId = PASShellBFF.CLIENT_ID_FOR_IDP,
+                ClientName = PASShellBFF.CLIENT_NAME_FOR_IDP,
+                ClientSecrets = { new Secret(PASShellBFF.CLIENT_SECRET_FOR_IDP.Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
                     // 🡡__ WHY   : The Authorization Code flow is the recommended OIDC flow for confidential server-side clients (BFFs).
@@ -59,9 +59,9 @@ public static class Config
                     //              secure token exchange in a standard way.
 
                 
-                RedirectUris = { $"{PASShellBFF.CLIENT_BASE_URL }/signin-oidc" },
-				PostLogoutRedirectUris = { $"{PASShellBFF.CLIENT_BASE_URL}/signout-callback-oidc" },
-				FrontChannelLogoutUri = $"{PASShellBFF.CLIENT_BASE_URL }/signout-oidc",
+                RedirectUris = { $"{PASShellBFF.SHELL_BFF_CLIENT_BASE_URL }/signin-oidc" },
+				PostLogoutRedirectUris = { $"{PASShellBFF.SHELL_BFF_CLIENT_BASE_URL}/signout-callback-oidc" },
+				FrontChannelLogoutUri = $"{PASShellBFF.SHELL_BFF_CLIENT_BASE_URL }/signout-oidc",
 
 				AllowOfflineAccess = true,
                     // 🡡__ WHY   : Allowing offline access enables issuance of refresh tokens (offline access RFC). BFFs or server-side
@@ -105,9 +105,9 @@ public static class Config
             // Products Microservice Client (BFF using ASP.NET Core 10)
             new()
             {
-                ClientId = ProductsMicroservice.CLIENT_ID,
-                ClientName = ProductsMicroservice.CLIENT_NAME,
-                ClientSecrets = { new Secret(ProductsMicroservice.CLIENT_SECRET.Sha256()) },
+                ClientId = ProductsMicroservice.CLIENT_ID_FOR_IDP,
+                ClientName = ProductsMicroservice.CLIENT_NAME_FOR_IDP,
+                ClientSecrets = { new Secret(ProductsMicroservice.CLIENT_SECRET_FOR_IDP.Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
                     // 🡡__ WHY   : The Products microservice (if acting as a confidential client or BFF) should use Authorization Code to keep tokens
@@ -115,9 +115,9 @@ public static class Config
                     // 🡡__ IF NOT: Using non-confidential or browser flows could expose tokens to the client-side, allowing token theft via XSS
                     //              and making secure API access more difficult to enforce.
 
-                RedirectUris = { $"{ProductsMicroservice.CLIENT_BASE_URL }/signin-oidc" },
-                PostLogoutRedirectUris = { $"{ProductsMicroservice.CLIENT_BASE_URL}/signout-callback-oidc" },
-                FrontChannelLogoutUri = $"{ProductsMicroservice.CLIENT_BASE_URL }/signout-oidc",
+                RedirectUris = { $"{ProductsMicroservice.BFF_CLIENT_BASE_URL }/signin-oidc" },
+                PostLogoutRedirectUris = { $"{ProductsMicroservice.BFF_CLIENT_BASE_URL}/signout-callback-oidc" },
+                FrontChannelLogoutUri = $"{ProductsMicroservice.BFF_CLIENT_BASE_URL }/signout-oidc",
 
                 AllowOfflineAccess = true,
                     // 🡡__ WHY   : Products Microservice BFF frontend may need refresh tokens to maintain backend sessions or to act on behalf of the user without interactive login.
@@ -156,9 +156,9 @@ public static class Config
             // Orders Microservice Client (BFF using NestJS, and not ASP.NET Core 10).
             new()
 			{
-				ClientId = OrdersMicroservice.CLIENT_ID,
-				ClientName = OrdersMicroservice.CLIENT_NAME,
-				ClientSecrets = { new Secret(OrdersMicroservice.CLIENT_SECRET.Sha256()) },
+				ClientId = OrdersMicroservice.CLIENT_ID_FOR_IDP,
+				ClientName = OrdersMicroservice.CLIENT_NAME_FOR_IDP,
+				ClientSecrets = { new Secret(OrdersMicroservice.CLIENT_SECRET_FOR_IDP.Sha256()) },
 
 				AllowedGrantTypes = GrantTypes.Code,
                     // 🡡__ WHY   : The Products microservice (if acting as a confidential client or BFF) should use Authorization Code to keep tokens
@@ -166,8 +166,8 @@ public static class Config
                     // 🡡__ IF NOT: Using non-confidential or browser flows could expose tokens to the client-side, allowing token theft via XSS
                     //              and making secure API access more difficult to enforce.
 
-                RedirectUris = { $"{OrdersMicroservice.CLIENT_BASE_URL}/api/auth/callback" },
-				PostLogoutRedirectUris = { $"{OrdersMicroservice.CLIENT_BASE_URL}/signout-callback-oidc" },
+                RedirectUris = { $"{OrdersMicroservice.BFF_CLIENT_BASE_URL}/api/auth/callback" },
+				PostLogoutRedirectUris = { $"{OrdersMicroservice.BFF_CLIENT_BASE_URL}/signout-callback-oidc" },
 				// FrontChannelLogoutUri = $"{OrdersMicroservice.CLIENT_BASE_URL }/signout-oidc",
 
 				AllowOfflineAccess = true,

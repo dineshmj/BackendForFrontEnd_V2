@@ -40,7 +40,7 @@ builder.Services
         //             This middleware reads the Authorization: Bearer header, validates the token signature and claims, and populates the user principal.
 	    // 🡡__ IF NOT: The API would not validate incoming bearer tokens and would either be unauthenticated (401) or would need a different auth mechanism.
     {
-        options.Authority = IDP.Authority;
+        options.Authority = IDP.AUTHORITY;
         options.Audience = MicroserviceApiResources.PRODUCTS_API;
 		    // 🡡__ WHY   : The Authority tells the middleware where to fetch issuer metadata (discovery) and signing keys. Audience restricts tokens
             //             to those issued for this API (ensures the token's "aud" claim matches the API identifier).

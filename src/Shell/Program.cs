@@ -88,9 +88,9 @@ builder.Services
     })
     .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = IDP.Authority;
-        options.ClientId = PASShellBFF.CLIENT_ID;
-        options.ClientSecret = PASShellBFF.CLIENT_SECRET;
+        options.Authority = IDP.AUTHORITY;
+        options.ClientId = PASShellBFF.CLIENT_ID_FOR_IDP;
+        options.ClientSecret = PASShellBFF.CLIENT_SECRET_FOR_IDP;
 
         options.ResponseType = "code";
 			// 🡡__ WHY   : The authorization code response type enforces the Authorization Code flow where the server

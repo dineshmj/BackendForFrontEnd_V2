@@ -61,9 +61,9 @@ builder.Services
     })
     .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority = IDP.Authority;
-        options.ClientId = ProductsMicroservice.CLIENT_ID;
-        options.ClientSecret = ProductsMicroservice.CLIENT_SECRET;
+        options.Authority = IDP.AUTHORITY;
+        options.ClientId = ProductsMicroservice.CLIENT_ID_FOR_IDP;
+        options.ClientSecret = ProductsMicroservice.CLIENT_SECRET_FOR_IDP;
         options.ResponseType = "code";
         options.ResponseMode = "query";
 
@@ -206,7 +206,7 @@ builder.Services.AddHttpClient(MicroserviceApiResources.PRODUCTS_API, client =>
     // 🡡__ WHY   : Registers a named HttpClient pre-configured with the API base address for the Products API so you can inject/use it from services.
     // 🡡__ IF NOT: You would need to construct HttpClient instances manually and risk misconfiguration, DNS socket exhaustion, or inconsistent base addresses.
 {
-	client.BaseAddress = new Uri(ProductsMicroservice.API_BASE_URL);
+	client.BaseAddress = new Uri(ProductsMicroservice.MICROSERVICE_API_BASE_URL);
 }).AddUserAccessTokenHandler();
     // 🡡__ WHY   : Automatically attaches the current user's access token to outgoing HttpClient requests so backend calls execute on behalf of the user.
     // 🡡__ IF NOT: You would have to manually retrieve and attach access tokens for each request; missing tokens will cause API authorization failures.

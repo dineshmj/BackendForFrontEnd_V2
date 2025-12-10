@@ -12,6 +12,7 @@ import {
 import { Request } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { SessionAuthGuard } from '../auth/guards/session-auth.guard';
+import { Console } from 'console';
 
 @Controller('api/orders')
 export class OrdersController {
@@ -24,7 +25,9 @@ export class OrdersController {
       // const user = req.user as any;
       // const accessToken = user?.tokens?.accessToken;
 
-      console.log('Accessing getOrders with access token:', accessToken ? accessToken.substring(0, 10) + '...' : 'none');
+      console.log ("");
+      console.log('Accessing getOrders with access token:', accessToken);
+      console.log ("");
 
       if (!accessToken) {
         throw new HttpException(
@@ -34,6 +37,13 @@ export class OrdersController {
       }
 
       const ordersMicroserviceApiUrl = process.env.ORDERS_MICROSERVICE_API_URL;
+      console.log ("");
+      console.log ("Orders Microservice API base URL: " + ordersMicroserviceApiUrl);
+      console.log ("");
+      console.log ("Ensure that the port number shown in the above API URL is same as the one that IIS Express is hosting the Orders Microservice GraphQL API.");
+      console.log ("If not, come to the .env file of this NestJS project, update the ORDERS_MICROSERVICE_API_URL value such that the port number matches with what IIS Express does.")
+      console.log ("");
+
       const graphQLQuery = {
         query: '{ orderReport { nodes { orderId dateOfOrder totalAmount paymentMethod invoiceNumber numberOfItems dispatchStatus customerName } } }'
       };

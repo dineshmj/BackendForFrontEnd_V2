@@ -95,7 +95,33 @@
 3) Final touches required (not urgent, only after all modules are implemented):
    - Teraform scripts must be written to provision all required infrastructure in a cloud provider (e.g., Azure, AWS, GCP).
 
+4) Troubleshooting:
+	* Unresponsive modules (such as, the Products links, when clicked, take a long time, but nothing gets rendered inside the iFrmae):
+
+		- Come out of Visual Studio 2026.
+		- Go to the repository root folder.
+		- Locate the ".vs" folder over there.
+		- SHIFT+Delete that folder.
+		- Invoke the FW.PAS.sln solution in Visual Studio 2026 again.
+			! The "Configure Startup projects ..." would have changed by now.
+		- Right-click on the solution node in Solution Explorer, and go to "Configure Startup Projects ... " menu.
+		- Re-specify the dependency order of projects to be started (just click on the appropriate radio button).
+		- Clean the solution.
+		- Run the solution.
+
+	* "Orders" Microservice API not contactable:
+
+		- The "NestJS" BFF type-script code takes the "Orders Microservice API" URL from the .env file.
+		- However, it has been observed that even though the "launchSettings.json" file of the "Orders" Microservice GraphQL API is set to a particular HTTPS port number,
+		  while running the Visual Studio 2026 solution "FW.PAS.sln", Visual Studio 2026 IDE changes the port to some other number without a specific reason.
+		- This will cause the "NestJS" BFF of the "Orders" Microservice web frontend to result in "404 - Not Found" response from the Orders Microservice API.
+		- What to do in this context:
+			1) Check what is the new port number in the launchSettings.json file of the "Orders" Microservice API. Note down this port number.
+			2) Come to the .env file of the "NestJS" BFF of the "Orders" Microservice web front-end, and change accordingly (the last line in the .env file - `ORDERS_MICROSERVICE_API_URL=https://localhost:44380`).
+			3) If the NestJS BFF is already running in a Terminal (under .\BFF.Web\ folder), CTRL+C it, and do a rerun by entering ".\buildnow.bat".
+			4) Test the Orders Microservice menu item in the PAS application.
+
 4) Important Gotchas and relevant URLs:
-	- Cookie names of BFF projects must begin with "__". If not, there can be issues with signing in and out.
+	- Cookie names of BFF projects must begin with "__". If not, there can be issues with signing in and out from Duende IDP server.
 		- Shell BFF UI cookie name: "__PAS-Shell-Host-bff"
 		- Products BFF UI cookie name: "__PAS-Microservice-Products-Host-bff"
