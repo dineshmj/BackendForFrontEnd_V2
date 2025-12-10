@@ -22,8 +22,7 @@ export class OrdersController {
   async getOrders(@Req() req: Request) {
       const accessToken = (req.session as any)?.AccessToken;
 
-      // const user = req.user as any;
-      // const accessToken = user?.tokens?.accessToken;
+      console.log('Accessing getOrders with access token:', accessToken);
 
       console.log ("");
       console.log('Accessing getOrders with access token:', accessToken);
