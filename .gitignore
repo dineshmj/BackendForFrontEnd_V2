@@ -47,3 +47,4 @@
 /src/Microservices/Orders/BFF.Web/dist
 /src/Microservices/Products/BFF.Web/wwwroot/_next/static
 /src/Shell/wwwroot/_next/static
+/CodeHierarchy.md
