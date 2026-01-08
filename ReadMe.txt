@@ -37,7 +37,7 @@
 			- Orders Microservice SPA Frontend (Next.js)
 			- Orders Microservice BFF Server (Nest.js)
 
-		2) Build and export the NextJS SPA projects as static files to the "out" folder under the "app" folder, under their respective ASP.NET Core BFF projects.
+		2) Build and export the NextJS SPA projects as static files using command "npm run export" to the "out" folder under the "app" folder, under their respective ASP.NET Core BFF projects.
 			- PAS Shell SPA Frontend
 			- Products Microservice SPA Frontend.
 
