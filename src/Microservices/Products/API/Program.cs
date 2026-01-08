@@ -69,28 +69,6 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-		        // 🡡__ WHY   : Provides permissive CORS for development and simple integration testing so browsers can call this API from any origin.
-		        // 🡡__ IF NOT: Strict CORS policies could block browser-based clients from making requests during development, but in production
-		        //             you should restrict origins, headers and methods to prevent cross-origin abuse and reduce attack surface.
-
-
-            // FIXME:
-            // FIXME: Do you really need this CORS settings? The browser JavaScripts
-            // FIXME: are NOT going to call this Microservice API, and the only
-            // FIXME: consumer is the C# code on the Products BFF (ASP.NET Core 10).
-            // FIXME: So, do you really need this?
-            // FIXME:
-
-    });
-});
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -99,7 +77,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
