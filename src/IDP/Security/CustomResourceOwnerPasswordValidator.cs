@@ -25,7 +25,7 @@ public sealed class CustomResourceOwnerPasswordValidator
 
         if (user != null)
         {
-            if (_passwordManager.VerifyPassword(user.HashedPassword, context.Password))
+            if (_passwordManager.VerifyPassword(user, user.HashedPassword, context.Password))
             {
                 context.Result = new GrantValidationResult(
                     subject: user.ID.ToString(),

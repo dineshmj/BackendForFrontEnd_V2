@@ -22,6 +22,8 @@ async function bootstrap() {
   });
 
   // Session configuration – for cross-site BFF usage
+  // app.use(csurf({ cookie: { sameSite: 'none', secure: true } }));
+
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -32,7 +34,7 @@ async function bootstrap() {
       cookie: {
         httpOnly: true,
         secure: true,      // Required for SameSite=None
-        sameSite: 'none',  // Allow cross-site fetch/iframe
+        sameSite: 'lax',  // Safer than 'none' for most cases.
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
     }),

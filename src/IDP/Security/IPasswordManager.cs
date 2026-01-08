@@ -1,9 +1,11 @@
-﻿namespace FW.IDP.Security
+﻿using FW.IDP.DBAccess.Entities;
+
+namespace FW.IDP.Security
 {
     public interface IPasswordManager
     {
-        string HashPassword(string password);
+        string HashPassword(User user, string password);
 
-        bool VerifyPassword(string storedHash, string providedPassword);
+        bool VerifyPassword(User user, string storedHash, string providedPassword);
     }
 }

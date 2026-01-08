@@ -70,7 +70,16 @@ namespace FW.Microservices.Products.BFFWeb.Controllers
                     });
                 }
 
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+				var refreshToken = await HttpContext.GetTokenAsync ("refresh_token");
+
+                if (!string.IsNullOrEmpty (refreshToken))
+                {
+					// This automatically finds the refresh token in your session and 
+					// sends it to the Identity Server's revocation endpoint.
+					await HttpContext.RevokeRefreshTokenAsync ();
+				}
+
+				await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                 return Ok(new
                 {

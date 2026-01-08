@@ -181,9 +181,19 @@ builder.Services
             var audience = jsonToken.Claims.FirstOrDefault(c => c.Type == "aud")?.Value;
             var scope = jsonToken.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
 
-            context.HttpContext.Session.SetString("AccessToken", accessToken);
-			    // 🡡__ WHY   : Persist the current access token in the server-side session so the BFF or handlers can reuse it for proxied API calls or diagnostics.
-			    // 🡡__ IF NOT: You would need to re-obtain tokens repeatedly or rely solely on authentication properties; proxied calls may lack a readily-available token.
+            // context.HttpContext.Session.SetString("AccessToken", accessToken);
+			// 🡡__ WHY   : Persist the current access token in the server-side
+            // session so the BFF or handlers can reuse it for proxied API calls or
+            // diagnostics.
+
+			// 🡡__ IF NOT: You would need to re-obtain tokens repeatedly or rely
+            // solely on authentication properties; proxied calls may lack a
+            // readily-available token.
+
+			// 🡡__ NOTE: This is not really required. The HttpContext.
+            // GetTokenAsync () call will get you the token on-the-fly, and you
+            // do not need to be worried about a stale token. The commented statement
+            // is retained for history purpose only.
 
 			return Task.CompletedTask;
         };

@@ -50,7 +50,7 @@ public sealed class UserRepository
             return false;
         }
 
-        var isValidUser = _passwordManager.VerifyPassword(user.HashedPassword, password);
+        var isValidUser = _passwordManager.VerifyPassword(user, user.HashedPassword, password);
 
         return isValidUser;
     }

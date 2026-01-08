@@ -1,10 +1,9 @@
-﻿using System.Net.Http.Headers;
-
+﻿using FW.Landscape.Common;
+using FW.Microservices.Products.BFFWeb.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-using FW.Landscape.Common;
-using FW.Microservices.Products.BFFWeb.Entities;
+using System.Net.Http.Headers;
 
 namespace FW.Microservices.Products.BFFWeb.Controllers;
 
@@ -26,9 +25,12 @@ public sealed class ProductsController
 	{
         try
         {
-            var accessToken = HttpContext.Session.GetString ("AccessToken");
+			var accessToken = await HttpContext.GetTokenAsync ("access_token");
 
-            if (string.IsNullOrEmpty(accessToken))
+			if (string.IsNullOrEmpty (accessToken))
+				return Unauthorized ();
+
+			if (string.IsNullOrEmpty(accessToken))
             {
                 return Unauthorized();
             }

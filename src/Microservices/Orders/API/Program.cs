@@ -33,7 +33,11 @@ builder.Services
 		{
 			ValidateAudience = true,
 			ValidateIssuerSigningKey = true,
-			ValidateLifetime = true
+			ValidateLifetime = true,
+			ValidateIssuer = true,
+			ClockSkew = TimeSpan.FromMinutes (5),
+			RequireExpirationTime = true,
+			RequireSignedTokens = true
 		};
 	});
 
