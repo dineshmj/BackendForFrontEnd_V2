@@ -157,15 +157,21 @@ builder.Services
 			// 🡡__ IF NOT: The runtime may look for a different claim type for roles and role checks will fail even if "role" claims are present.
     });
 
+builder.Services.AddOpenIdConnectAccessTokenManagement ();
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-    app.UseDeveloperExceptionPage();
+if (app.Environment.IsDevelopment ())
+{
+	app.UseDeveloperExceptionPage ();
+}
 else
-    app.UseHsts();
+{
+	app.UseHsts ();
+}
 
 app.UseSession();
 	// 🡡__ WHY   : Ensures the session middleware is part of the pipeline so server-side session values (ISession) are available to handlers.
