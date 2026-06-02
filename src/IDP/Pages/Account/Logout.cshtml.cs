@@ -39,13 +39,15 @@ public sealed class LogoutModel
 
     public async Task<IActionResult> OnPost()
     {
+        var ct = new CancellationToken ();
+
         if (User.Identity?.IsAuthenticated == true)
         {
             await HttpContext.SignOutAsync();
-            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()), ct);
         }
 
-        var logout = await _interaction.GetLogoutContextAsync(Input.LogoutId);
+        var logout = await _interaction.GetLogoutContextAsync(Input.LogoutId, ct);
 
         return Redirect(logout?.PostLogoutRedirectUri ?? "~/");
     }

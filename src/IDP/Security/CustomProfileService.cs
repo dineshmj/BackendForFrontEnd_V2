@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
@@ -19,7 +18,7 @@ public sealed class CustomProfileService
         _userRepository = userRepository;
     }
 
-    public async Task GetProfileDataAsync(ProfileDataRequestContext context)
+    public async Task GetProfileDataAsync(ProfileDataRequestContext context, CancellationToken ct)
     {
         var sub = context.Subject.GetSubjectId();
         var user = await _userRepository.FindBySubjectIdAsync(sub);
@@ -61,7 +60,7 @@ public sealed class CustomProfileService
         context.IssuedClaims = claims;
     }
 
-    public Task IsActiveAsync(IsActiveContext context)
+    public Task IsActiveAsync(IsActiveContext context, CancellationToken ct)
     {
 		// Here you can implement custom logic to determine if the user is active (by checking if the user exists, is not locked out, etc.)
 		context.IsActive = !string.IsNullOrWhiteSpace(context.Subject.GetSubjectId());

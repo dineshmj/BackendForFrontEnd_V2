@@ -19,7 +19,7 @@ public sealed class CustomResourceOwnerPasswordValidator
         _passwordManager = passwordManager;
     }
 
-    public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+    public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context, CancellationToken ct)
     {
         var user = await _userRepository.FindByUsernameAsync(context.UserName);
 

@@ -54,19 +54,21 @@ public sealed class Index : PageModel
 
     public async Task<IActionResult> OnPost()
     {
+        var ct = new CancellationToken();
+
         // Validate return url is still valid.
-        var request = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
-        if (request == null) return RedirectToPage("/Home/Error/Index");
+        var request = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl, ct);
+        if (request == null) return RedirectToPage("/Home/Error/Index", ct);
 
         ConsentResponse? grantedConsent = null;
 
         // User clicked 'no' - send back the standard 'access_denied' response.
         if (Input.Button == "no")
         {
-            grantedConsent = new ConsentResponse { Error = AuthorizationError.AccessDenied };
+            grantedConsent = new ConsentResponse { Error = InteractionError.AccessDenied };
 
             // Emit event
-            await _events.RaiseAsync(new ConsentDeniedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
+            await _events.RaiseAsync(new ConsentDeniedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues), ct);
             Telemetry.Metrics.ConsentDenied(request.Client.ClientId, request.ValidatedResources.ParsedScopes.Select(s => s.ParsedName));
         }
 
@@ -90,7 +92,7 @@ public sealed class Index : PageModel
                 };
 
                 // Emit "consent granted" event
-                await _events.RaiseAsync(new ConsentGrantedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
+                await _events.RaiseAsync(new ConsentGrantedEvent(User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent), ct);
                 Telemetry.Metrics.ConsentGranted(request.Client.ClientId, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent);
 
                 var denied = request.ValidatedResources.ParsedScopes.Select(s => s.ParsedName).Except(grantedConsent.ScopesValuesConsented);
@@ -111,7 +113,7 @@ public sealed class Index : PageModel
             ArgumentNullException.ThrowIfNull(Input.ReturnUrl, nameof(Input.ReturnUrl));
 
             // Communicate outcome of consent back to identityserver.
-            await _interaction.GrantConsentAsync(request, grantedConsent);
+            await _interaction.GrantConsentAsync(request, grantedConsent, ct);
 
             // Redirect back to authorization endpoint
             if (request.IsNativeClient())
@@ -127,7 +129,7 @@ public sealed class Index : PageModel
         // We need to redisplay the consent UI.
         if (!await SetViewModelAsync(Input.ReturnUrl))
         {
-            return RedirectToPage("/Home/Error/Index");
+            return RedirectToPage("/Home/Error/Index", ct);
         }
 
         return Page();
@@ -135,9 +137,11 @@ public sealed class Index : PageModel
 
     private async Task<bool> SetViewModelAsync(string? returnUrl)
     {
+        var ct = new CancellationToken();
+
         ArgumentNullException.ThrowIfNull(returnUrl);
 
-        var request = await _interaction.GetAuthorizationContextAsync(returnUrl);
+        var request = await _interaction.GetAuthorizationContextAsync(returnUrl, ct);
 
         if (request != null)
         {

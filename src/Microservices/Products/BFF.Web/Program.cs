@@ -3,6 +3,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+using Duende.AccessTokenManagement.OpenIdConnect;
+using Duende.Bff;
 using Duende.Bff.Yarp;
 
 using FW.Landscape.Common;

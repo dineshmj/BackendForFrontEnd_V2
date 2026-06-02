@@ -60,13 +60,14 @@ public sealed class LoginModel
 
     public async Task<IActionResult> OnPost()
     {
-        var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
+        var ct = new CancellationToken();
+        var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl, ct);
 
         if (Input.Button != "login")
         {
             if (context != null)
             {
-                await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
+                await _interaction.DenyAuthorizationAsync(context, InteractionError.AccessDenied, ct);
 
                 if (context.IsNativeClient())
                 {
@@ -87,7 +88,7 @@ public sealed class LoginModel
             {
                 var user = _userRepository.FindByUsernameAsync(Input.Username).Result;
 
-                await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, $"{user.ID}", $"{user.FirstName} {user.LastName}"));
+                await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, $"{user.ID}", $"{user.FirstName} {user.LastName}"), ct);
 				// 🡡__ WHY   : 
 				// 🡡__ IF NOT: 
 				    // 🡡__ WHY   : This event notifies IdentityServer's event pipeline that a login succeeded,
@@ -144,7 +145,7 @@ public sealed class LoginModel
                 }
             }
 
-            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials"));
+            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials"), ct);
             ModelState.AddModelError(string.Empty, "Invalid username or password");
         }
 

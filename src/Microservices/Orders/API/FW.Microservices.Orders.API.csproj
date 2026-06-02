@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.11" />
-    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="15.1.11" />
-    <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.5" />
-    <PackageReference Include="HotChocolate.Data" Version="15.1.11" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="15.1.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="16.0.11" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="16.0.11" />
+    <!--<PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.5" />-->
+    <PackageReference Include="HotChocolate.Data" Version="16.0.11" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="16.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>

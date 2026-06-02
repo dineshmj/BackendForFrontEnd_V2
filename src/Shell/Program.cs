@@ -8,6 +8,8 @@ using Duende.Bff.Yarp;
 
 using FW.Landscape.Common;
 using FW.PAS.BFFWeb.DBAccess;
+using Duende.AccessTokenManagement.OpenIdConnect;
+using Duende.Bff;
 
 var builder = WebApplication.CreateBuilder(args);
 

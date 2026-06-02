@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using Duende.AccessTokenManagement.OpenIdConnect;
+
 using FW.Common.WebUtilties.Helpers;
 
 namespace FW.Microservices.Products.BFFWeb.Controllers

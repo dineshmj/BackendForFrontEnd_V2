@@ -1,6 +1,6 @@
 1) Technology Stack:
 
-	a) Duende IdentityServer 7 based IDP that runs on ASP.NET Core 10.
+	a) Duende IdentityServer 8 based IDP that runs on ASP.NET Core 10.
 		- Has its own user database using SQLite (.db file under the UserDB folder).
 		- Supports OpenID Connect and OAuth 2.0 protocols.
 		- Supports grant type: Authorization Code Flow with PKCE.
@@ -30,7 +30,7 @@
 			- API Server: Nest.js 10.0 with GraphQL response.
 
 2) What to do after cloning the repository:
-	a) Open PowerShell ISE IDE and run the PowerShell script "CompileAndExportBFFClients.ps1" at the repository root folder. This will:
+	a) Open PowerShell ISE at the repository root folder, and run the PowerShell script "CompileAndExportBFFClients.ps1". This will:
 		1) Run "npm install" for:
 			- PAS Shell BFF Frontend (Next.js)
 			- Products Microservice SPA Frontend (Next.js)
@@ -41,9 +41,9 @@
 			- PAS Shell SPA Frontend
 			- Products Microservice SPA Frontend.
 
-		3) Invoke the Visual Studio Code IDE to open the BFF.Web folder of the "Orders" Microservice:
-			- Open Terminal 1 at location "BFF.Web", and run the ".\buildnow.bat" to run the Nest.js BFF application.
-			- Open Terminal 2 at location "BFF.Web\client-app" and run ".\buildnow.bat" to run the NextJS SPA application.
+	b) Invoke a Visual Studio Code IDE at "Orders" Microservice BFF.Web folder:
+		- Open Terminal 1 at location "BFF.Web", and run the ".\buildnow.bat" to run the Nest.js BFF application.
+		- Open Terminal 2 at location "BFF.Web\client-app" and run ".\buildnow.bat" to run the NextJS SPA application.
 
 	b) Open the "FW.PAS.sln" solution file in Visual Studio 2025 IDE.
 
@@ -54,7 +54,7 @@
 			2) Products Microservice API - Start - IIS Express.
 			3) Orders Microservice API - Start - IIS Express.
 			4) Products Microservice BFF Frontend - Start - IIS Express.
-			5) (Note! The Orders Microservice BFF Frontend is a Nest.js application that must be started separately in VS Code).
+			5) (Note! The Orders Microservice BFF Frontend is a Nest.js application that must be started separately in VS Code, which you are doing anyway above (- Right-click step)).
 			6) PAS Shell BFF Frontend - Start - IIS Express.
 
 	c) Run the "FW.PAS.sln" solution in Debug mode (F5).
