@@ -1,47 +1,54 @@
 1) Technology Stack:
 
 	a) Duende IdentityServer 8 based IDP that runs on ASP.NET Core 10.
-		- Has its own user database using SQLite (.db file under the UserDB folder).
-		- Supports OpenID Connect and OAuth 2.0 protocols.
-		- Supports grant type: Authorization Code Flow with PKCE.
-		- Supports refresh tokens.
-		- Supports role-based authorization using role claims in the ID Token and Access Token.
-		- Supports Consent page.
+		- Has its own SQLite-based user database (see the .db file under `UserDB` folder in the IDP project).
+		- Supports OpenID Connect and OAuth 2.1 protocols.
+		- Grant type: Authorization Code Flow with PKCE.
+		- Supports refresh tokens for Identity Tokens that are about to expire.
+		- Supports role-based access control (R-BAC) by embedding role claims onto the ID Token and Access Token.
+		- Supports User Consent page.
 
-	b) Platform Administration System (PAS) Shell SPA Frontend
+	b) Master application: Platform Administration System (PAS), which is a Shell SPA Frontend
 		- Runs on Next.js 14 with app directory structure.
-		- Uses ASP.NET Core 10.0 as the Backend for Frontend (BFF) server.
+		- Uses ASP.NET Core 10 for "Backend for Frontend" (BFF).
 
 	c) Microservices:
 
 		1) Products Microservice
-			- SPA Frontend: Next.js 14 with app directory structure.
-			- BFF Server: ASP.NET Core 10.0 with REST response.
-			- API Server: ASP.NET Core 10.0 with REST response.
+			- Frontend:
+				- SPA: Next.js 14 with app directory structure.
+				- BFF: ASP.NET Core 10 with REST edge APIs.
+			- Backend / App Tier:
+				- API: ASP.NET Core 10 with REST response.
 
 		2) Orders Microservice
-			- SPA Frontend: Next.js 14 with app directory structure.
-			- BFF Server: Nest.js 10.0 with REST response.
-			- API Server: ASP.NET Core 10.0 with GraphQL response.
+			- Frontend: 
+				- SPA: Next.js 14 with app directory structure.
+				- BFF: Nest.js 10 with REST edge APIs.
+			- Backend / App Tier:
+				- API: ASP.NET Core 10 with GraphQL response.
 
 		3) Payments Microservice (yet to be implemented)
-			- SPA Frontend: React.js 18.
-			- BFF Server: Python / Flask BFF server with REST response.
-			- API Server: Nest.js 10.0 with GraphQL response.
+			- Frontend:
+				- SPA: React.js 18.
+				- BFF: Python / Flask BFF server with REST response.
+			- Backend / App Tier:
+				- API: Nest.js 10 with GraphQL response.
 
 2) What to do after cloning the repository:
-	a) Open PowerShell ISE at the repository root folder, and run the PowerShell script "CompileAndExportBFFClients.ps1". This will:
-		1) Run "npm install" for:
+	a) Open the PS1 script file "CompileAndExportBFFClients.ps1" at repo root folder inside PowerShell ISE and run it. This will:
+		1) trigger running the "npm install" command for:
 			- PAS Shell BFF Frontend (Next.js)
 			- Products Microservice SPA Frontend (Next.js)
 			- Orders Microservice SPA Frontend (Next.js)
 			- Orders Microservice BFF Server (Nest.js)
 
-		2) Build and export the NextJS SPA projects as static files using command "npm run export" to the "out" folder under the "app" folder, under their respective ASP.NET Core BFF projects.
+		2) trigger the "Build and export" task by running the command "npm run export" on the NextJS SPA projects, which builds static files in the "out" folder under the "app" folder under their respective host ASP.NET Core BFF projects.
 			- PAS Shell SPA Frontend
 			- Products Microservice SPA Frontend.
 
-	b) Invoke a Visual Studio Code IDE at "Orders" Microservice BFF.Web folder:
+	b) Now, it is time to run the "Orders" SPA, BFF and App!
+		- Invoke a Visual Studio Code IDE at "Orders" Microservice BFF.Web folder:
 		- Open Terminal 1 at location "BFF.Web", and run the ".\buildnow.bat" to run the Nest.js BFF application.
 		- Open Terminal 2 at location "BFF.Web\client-app" and run ".\buildnow.bat" to run the NextJS SPA application.
 
