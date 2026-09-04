@@ -55,6 +55,9 @@ export class AuthService {
       ...options.headers,
     };
 
+    console.log('🔥 callDownstreamApi URL:', apiUrl);
+    console.log('🔥 callDownstreamApi Headers:', headers);
+
     return fetch(apiUrl, {
       ...options,
       headers,

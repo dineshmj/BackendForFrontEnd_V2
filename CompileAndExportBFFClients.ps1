@@ -51,6 +51,26 @@ function Export-NextJS-SPA-For-BFF {
 
 cls
 
+# Define the process names to look for
+$targetProcesses = @('devenv', 'code')
+
+# Get running processes matching the target names
+$runningTargets = Get-Process -Name $targetProcesses -ErrorAction SilentlyContinue
+
+if ($runningTargets) {
+    # Extract distinct process names that were detected
+    $detected = ($runningTargets.ProcessName | Select-Object -Unique) -join ', '
+    
+    # Display message
+    Write-Host "`r`n`r`nDetected active IDE instance: [$detected]. Exiting script.`r`n`r`n`r`n" -ForegroundColor Yellow
+    
+    # Exit with a non-zero code indicating early exit
+    exit 1
+}
+
+# Your main script logic continues below
+Write-Host "No targeted IDEs detected. Proceeding..." -ForegroundColor Green
+
 $codeRootFolder = $PSScriptRoot;
 
 $shellSpaAppFolder = "$($codeRootFolder)\src\Shell\client-app";
