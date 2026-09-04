@@ -36,7 +36,23 @@
 				- API: Nest.js 10 with GraphQL response.
 
 2) What to do after cloning the repository:
-	a) Open the PS1 script file "CompileAndExportBFFClients.ps1" at repo root folder inside PowerShell ISE and run it. This will:
+	a) Ensure that you have exited Visual Studio 2026 and Visual Studio Code IDEs.
+
+	b) Ensure that the Certificates of Orders micro-frontend are imported to Windows 11 Certificate store. Steps:
+
+		1) Go to ~\BackendForFrontEnd_V2\src\Microservices\Orders\BFF.Web\certs\ location.
+
+		2) Run the `certlm.msc` snap-in to import certificates on the "local machine" (not per-user, but for the system).
+		
+		3) Expand "Trusted Root Certification Authorities" and click the "Certificates" folder underneath it. This is the store Windows (and anything that defers to Windows, like Edge and Opera) checks when validating a server's TLS certificate.
+
+		4) Right-click the Certificates folder → All Tasks → Import.
+		
+		5) Follow the wizard: browse and pick Microservice.Orders.CA.crt. In the "next" screen, select the "Place all certificates in the following store" option, and ensure that the Certificate Store Name is "Trusted Root Certification Authorities" in the field below the radio button.
+
+		6) Finish the wizard — Windows will show a security warning asking you to confirm you trust this CA; confirm it.
+
+	c) Open the PS1 script file "CompileAndExportBFFClients.ps1" at repo root folder inside PowerShell ISE and run it. This will:
 		1) trigger running the "npm install" command for:
 			- PAS Shell BFF Frontend (Next.js)
 			- Products Microservice SPA Frontend (Next.js)
@@ -47,12 +63,12 @@
 			- PAS Shell SPA Frontend
 			- Products Microservice SPA Frontend.
 
-	b) Now, it is time to run the "Orders" SPA, BFF and App!
+	d) Now, it is time to run the "Orders" SPA, BFF and App!
 		- Invoke a Visual Studio Code IDE at "Orders" Microservice BFF.Web folder:
 		- Open Terminal 1 at location "BFF.Web", and run the ".\buildnow.bat" to run the Nest.js BFF application.
 		- Open Terminal 2 at location "BFF.Web\client-app" and run ".\buildnow.bat" to run the NextJS SPA application.
 
-	b) Open the "FW.PAS.sln" solution file in Visual Studio 2025 IDE.
+	e) Open the "FW.PAS.sln" solution file in Visual Studio 2025 IDE.
 
 		- Right-click on the solution node in the Solution Explorer and select "Restore NuGet Packages".
 		- Right-click on the solution node in the Solution Explorer and choose "Configure Startup Projects...", and ensure that "Multiple startup projects" is selected with the following order:
@@ -64,14 +80,14 @@
 			5) (Note! The Orders Microservice BFF Frontend is a Nest.js application that must be started separately in VS Code, which you are doing anyway above (- Right-click step)).
 			6) PAS Shell BFF Frontend - Start - IIS Express.
 
-	c) Run the "FW.PAS.sln" solution in Debug mode (F5).
+	f) Run the "FW.PAS.sln" solution in Debug mode (F5).
 
 		- Since the IDP project is "self-hosted", a console window will open for the IDP project, showing logs.
 		- The IDP shall be running at the default Duende IdentityServer port, which is 44392 (https://localhost:44392).
 
-	d) Open the web browser, and ensure that cookies and history ("from all time") are cleared before starting the testing.
+	g) Open the web browser, and ensure that cookies and history ("from all time") are cleared before starting the testing.
 
-	e) Navigate to the URL of the PAS Shell BFF Frontend application at "https://localhost:44367". The expected behavior:
+	h) Navigate to the URL of the PAS Shell BFF Frontend application at "https://localhost:44367". The expected behavior:
 
 		- Since "authentication cookie" is not present in the request from the web browser, the Shell BFF server will redirect the browser to the IDP login page at "https://localhost:44392".
 		- The browser gets a 302 - Redirect response from the Shell BFF server, and navigates to the IDP login page.
@@ -93,7 +109,7 @@
 			* This Microservice BFF Frontend URL will try to perform a silent authentication using the existing session at the IDP (since the IDP cookie is also present in the browser).
 		- Once the silent authentication is successful, the Microservice BFF Frontend application creates its own authentication cookie for the user, and presents the page requested in the iFrame.
 
-	f) The following are the logout behavior:
+	i) The following are the logout behavior:
 		- When the user clicks on the "Sign Out" button in the Shell BFF Frontend application, the Shell BFF server clears its authentication cookie, and redirects the browser to the IDP's "end session" endpoint.
 		- Before doing the above step, the Shell BFF server also sends a back-channel logout request to all involved Microservice BFF Frontend applications to do a "silent-logout, and clear their authentication cookies for the user.
 		- The IDP clears its session cookie, and presents a logout confirmation page to the user.

@@ -34,7 +34,7 @@ async function bootstrap() {
       cookie: {
         httpOnly: true,
         secure: true,      // Required for SameSite=None
-        sameSite: 'lax',  // Safer than 'none' for most cases.
+        sameSite: 'none',  // Required for rendering within iFrame of the shell application.
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
     }),
