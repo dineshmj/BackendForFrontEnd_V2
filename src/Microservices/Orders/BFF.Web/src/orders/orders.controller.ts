@@ -95,9 +95,20 @@ export class OrdersController {
 
       return response.json();
     } catch (error) {
+      const message =
+        error instanceof HttpException
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : 'Failed to fetch order';
+      const status =
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR;
+
       throw new HttpException(
-        error.message || 'Failed to fetch order',
-        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message,
+        status,
       );
     }
   }
@@ -134,9 +145,20 @@ export class OrdersController {
 
       return response.json();
     } catch (error) {
+      const message =
+        error instanceof HttpException
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : 'Failed to create order';
+      const status =
+        error instanceof HttpException
+          ? error.getStatus()
+          : HttpStatus.INTERNAL_SERVER_ERROR;
+
       throw new HttpException(
-        error.message || 'Failed to create order',
-        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        message,
+        status,
       );
     }
   }

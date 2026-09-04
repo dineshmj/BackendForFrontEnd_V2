@@ -1,1 +1,1 @@
-npm run start:dev
+pnpm run start:dev

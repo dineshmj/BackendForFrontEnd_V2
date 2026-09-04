@@ -1,1 +1,1 @@
-npm run dev:https
+pnpm run dev:https
