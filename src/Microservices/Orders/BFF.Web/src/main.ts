@@ -3,13 +3,14 @@ import { AppModule } from './app.module';
 import session from 'express-session';
 import passport from 'passport';
 import fs from 'fs';
+// (reuse your existing `import fs from 'fs';` — no need for a second one)
 import * as path from 'path';
+import { Agent, setGlobalDispatcher } from 'undici';
+import csurf from 'csurf';
+import cookieParser from 'cookie-parser';
 
 console.log('MAIN NODE_EXTRA_CA_CERTS:', process.env.NODE_EXTRA_CA_CERTS);
 console.log('MAIN EXTRA CA COUNT:', require('tls').getCACertificates('extra').length);
-
-import { Agent, setGlobalDispatcher } from 'undici';
-// (reuse your existing `import fs from 'fs';` — no need for a second one)
 
 const caBundle = fs.readFileSync(
   path.join(__dirname, '..', 'certs', 'extra-ca-bundle.pem'),
@@ -41,7 +42,8 @@ async function bootstrap() {
   });
 
   // Session configuration – for cross-site BFF usage
-  // app.use(csurf({ cookie: { sameSite: 'none', secure: true } }));
+  app.use(cookieParser());
+  app.use(csurf({ cookie: { sameSite: 'none', secure: true } }));
 
   app.use(
     session({
