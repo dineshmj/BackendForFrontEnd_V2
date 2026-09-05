@@ -4,11 +4,9 @@ import session from 'express-session';
 import passport from 'passport';
 import fs from 'fs';
 import * as path from 'path';
-//import path from 'path';
 
 console.log('MAIN NODE_EXTRA_CA_CERTS:', process.env.NODE_EXTRA_CA_CERTS);
 console.log('MAIN EXTRA CA COUNT:', require('tls').getCACertificates('extra').length);
-
 
 import { Agent, setGlobalDispatcher } from 'undici';
 // (reuse your existing `import fs from 'fs';` — no need for a second one)
@@ -21,6 +19,7 @@ setGlobalDispatcher(
   new Agent({
     connect: {
       ca: caBundle,
+      // Node does not use the Windows/OS cert store for its own outbound calls by default — completely separate trust store from what the browser was just fixed to trust.
     },
   }),
 );
