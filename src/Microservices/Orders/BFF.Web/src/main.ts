@@ -6,8 +6,7 @@ import fs from 'fs';
 // (reuse your existing `import fs from 'fs';` — no need for a second one)
 import * as path from 'path';
 import { Agent, setGlobalDispatcher } from 'undici';
-import csurf from 'csurf';
-import cookieParser from 'cookie-parser';
+import { csrfSync } from 'csrf-sync';
 
 console.log('MAIN NODE_EXTRA_CA_CERTS:', process.env.NODE_EXTRA_CA_CERTS);
 console.log('MAIN EXTRA CA COUNT:', require('tls').getCACertificates('extra').length);
@@ -41,9 +40,9 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Session configuration – for cross-site BFF usage
-  app.use(cookieParser());
-  app.use(csurf({ cookie: { sameSite: 'none', secure: true } }));
+  // CSRF protection (Synchronizer Token Pattern) — relies on req.session, so must be
+  // initialized after express-session, and mounted after it in the middleware chain below.
+  const { csrfSynchronisedProtection } = csrfSync();
 
   app.use(
     session({
@@ -64,6 +63,9 @@ async function bootstrap() {
   // Initialize Passport
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // Enforce CSRF protection on all state-changing requests from here on
+  app.use(csrfSynchronisedProtection);
 
   const port = Number (process.env.PORT);
   await app.listen(port);
