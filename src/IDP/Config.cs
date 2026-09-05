@@ -168,7 +168,7 @@ public static class Config
 
                 RedirectUris = { $"{OrdersMicroservice.BFF_CLIENT_BASE_URL}/api/auth/callback" },
 				PostLogoutRedirectUris = { $"{OrdersMicroservice.BFF_CLIENT_BASE_URL}/signout-callback-oidc" },
-				// FrontChannelLogoutUri = $"{OrdersMicroservice.CLIENT_BASE_URL }/signout-oidc",
+				FrontChannelLogoutUri = $"{OrdersMicroservice.BFF_CLIENT_BASE_URL }/signout-oidc",
 
 				AllowOfflineAccess = true,
                     // 🡡__ WHY   : Products Microservice BFF frontend may need refresh tokens to maintain backend sessions or to act on behalf of the user without interactive login.

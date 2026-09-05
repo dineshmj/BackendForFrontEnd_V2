@@ -46,7 +46,7 @@ function Export-NextJS-SPA-For-BFF {
         exit 1
     }
    
-    Write-Host "Exporting of SPA for BFF complete for '$Directory'." -ForegroundColor Green
+    Write-Host "Exporting of SPA for BFF complete for '$Directory'.`r`n`r`n-*-*-*-`r`n`r`n" -ForegroundColor Green
 }
 
 cls

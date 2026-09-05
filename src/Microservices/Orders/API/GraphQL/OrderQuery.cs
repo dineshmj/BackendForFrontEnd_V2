@@ -7,8 +7,7 @@ namespace FW.Microservices.Orders.API.GraphQL.Queries
 {
 	public sealed class OrderQuery
 	{
-		[Authorize]
-		[AllowAnonymous]
+		[Authorize(Roles = ["orders_viewer"])]
 		[UsePaging]
 		[UseProjection]
 		[UseFiltering]

@@ -19,6 +19,8 @@ builder.Services
 	.AddProjections ()
 	.AddFiltering ()
 	.AddSorting ()
+	.AddMaxExecutionDepthRule (3)
+	.DisableIntrospection ()
 	.RegisterDbContextFactory<OrderDbContext> ()
 	.AddAuthorization ();
 
