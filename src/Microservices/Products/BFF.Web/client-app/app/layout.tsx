@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ErrorBoundary from './components/ErrorBoundary';
 import ReduxProviderWrapper from './components/ReduxProviderWrapper';
+import { NavigationGuardListener } from './components/NavigationGuardListener';
 
 export const metadata: Metadata = {
   title: 'Products Microsrevice BFF',
@@ -17,7 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReduxProviderWrapper>
-          <ErrorBoundary>{children}</ErrorBoundary>
+          <ErrorBoundary>
+            <NavigationGuardListener />
+            {children}
+          </ErrorBoundary>
         </ReduxProviderWrapper>
       </body>
     </html>
